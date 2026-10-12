@@ -7,10 +7,6 @@ import {useLocale} from '../../i18n';
 import {useSurfaceNavigation} from '../../navigation/surface-navigation';
 
 function ratioOf(state: TransferSnapshot) {
-  if (state.fileBytesTotal > 0) {
-    const extra = state.activeTotal > 0 ? Math.min(state.activeLoaded, state.activeTotal) : 0;
-    return Math.min(1, (state.fileBytesLoaded + extra) / state.fileBytesTotal);
-  }
   if (state.fileTotal > 0) return Math.min(1, state.fileLoaded / state.fileTotal);
   const width = /^([\d.]+)%$/.exec(state.barWidth);
   if (width && !state.indeterminate) return Math.min(1, Number(width[1]) / 100);
