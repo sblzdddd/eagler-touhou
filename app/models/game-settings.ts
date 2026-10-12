@@ -123,7 +123,8 @@ export function createGameSettingsModel({storage, onChange}: {
       fallbackPreferenceId: multiplayer ? gameId : null,
       context: {uiLocale: context.uiLocale, thpracAvailable: productFeatureAvailable(gameId, 'thprac', context.hostFeatures),
         webAudioAvailable: context.musicAvailability.audio,
-        externalMidiAvailable: PRODUCT_GAMES[gameId].musicCapabilities.midi && context.webMidiAvailable}});
+        externalMidiAvailable: PRODUCT_GAMES[gameId].musicCapabilities.midi && context.webMidiAvailable,
+        ...("frameLimit60Enabled" in PRODUCT_GAMES[gameId].support ? {frameLimit60Enabled: PRODUCT_GAMES[gameId].support.frameLimit60Enabled} : {})}});
     const options = applySharedTouchPreferences(normalized.options, loadOrInitializeSharedTouchPreferences(storage, normalized.options));
     if (multiplayer) options.thpracEnabled = false;
     const savedLanguage = loadStoredLanguagePreference({storage, preferenceId, fallbackPreferenceId: multiplayer ? gameId : null});

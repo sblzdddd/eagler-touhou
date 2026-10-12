@@ -276,7 +276,8 @@ for (const id of PRODUCT_IDS) {
 }
 assert.equal(productEnabledForBuild("th99", true), false);
 
-assert.deepEqual(Object.fromEntries(Object.entries(PRODUCT_GAMES).map(([id, product]) => [id, product.support.highRefreshRate])), {th06: true, th07: true, th08: true, th09: false, th10: true, th11: false, th15: true, th20: false, thsss: false}, "high-refresh UI must follow the catalog capability");
+assert.deepEqual(Object.fromEntries(Object.entries(PRODUCT_GAMES).map(([id, product]) => [id, product.support.highRefreshRate])), {th06: true, th07: true, th08: true, th09: false, th10: true, th11: false, th15: true, th20: false, thsss: true}, "high-refresh UI must follow the catalog capability");
+assert.equal(PRODUCT_GAMES.thsss.support.frameLimit60Enabled, false, "THSSS leaves the high-refresh switch on until the player changes it");
 assert.equal(PRODUCT_GAMES.th15.features.languages,true);
 assert.equal(PRODUCT_GAMES.th15.features.thprac,true);
 assert.ok(PRODUCT_GAMES.th15.requiredShared.includes('/unifont.otf'));

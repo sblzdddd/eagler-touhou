@@ -33,6 +33,8 @@ for (const faithBarEnabled of [false, true]) {
   assert.equal(normalizeStoredGamePreferences(stored, { thpracAvailable: true, webAudioAvailable: true }).options.faithBarEnabled, faithBarEnabled);
 }
 assert.equal(normalizeStoredGamePreferences(null, { thpracAvailable: true, webAudioAvailable: true }).options.frameLimit60Enabled, true);
+assert.equal(normalizeStoredGamePreferences(null, { thpracAvailable: true, webAudioAvailable: true, frameLimit60Enabled: false }).options.frameLimit60Enabled, false, "a product may default the 60 Hz limit off");
+assert.equal(normalizeStoredGamePreferences({ options: { frameLimit60Enabled: true } }, { thpracAvailable: true, webAudioAvailable: true, frameLimit60Enabled: false }).options.frameLimit60Enabled, true, "a stored frame-limit choice overrides the product default");
 for (const frameLimit60Enabled of [false, true]) {
   assert.equal(normalizeStoredGamePreferences({ options: { frameLimit60Enabled } }, { thpracAvailable: true, webAudioAvailable: true }).options.frameLimit60Enabled, frameLimit60Enabled,
     "renaming the switch must preserve an existing explicit refresh-rate choice");

@@ -168,6 +168,7 @@ export interface NormalizeGamePreferencesContext {
   // owns a MIDI music path and the browsing context exposes Web MIDI; a stored
   // device id must never survive into a place it cannot be used.
   externalMidiAvailable?: boolean;
+  frameLimit60Enabled?: boolean;
 }
 
 export interface NormalizedGamePreferences {
@@ -240,7 +241,7 @@ export function normalizeStoredGamePreferences(
     magnifierEnabled: booleanOption(rawOptions, "magnifierEnabled", DEFAULT_GAME_OPTIONS.magnifierEnabled),
     focusHitboxEnabled: booleanOption(rawOptions, "focusHitboxEnabled", DEFAULT_GAME_OPTIONS.focusHitboxEnabled),
     faithBarEnabled: booleanOption(rawOptions, "faithBarEnabled", DEFAULT_GAME_OPTIONS.faithBarEnabled),
-    frameLimit60Enabled: booleanOption(rawOptions, "frameLimit60Enabled", DEFAULT_GAME_OPTIONS.frameLimit60Enabled),
+    frameLimit60Enabled: booleanOption(rawOptions, "frameLimit60Enabled", context.frameLimit60Enabled ?? DEFAULT_GAME_OPTIONS.frameLimit60Enabled),
     touchEnabled: booleanOption(rawOptions, "touchEnabled", DEFAULT_GAME_OPTIONS.touchEnabled),
     touchMovementMode: migratedMovement,
     touchSensitivity,
