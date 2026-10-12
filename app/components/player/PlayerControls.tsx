@@ -10,6 +10,7 @@ import {NetplayConnectionWindow} from '../NetplayConnectionWindow';
 import {NetplayCalibrationReport} from '../NetplayCalibrationReport';
 import {RuntimeDiagnostics, type NetplayDiagnosticLines} from './RuntimeDiagnostics';
 import {TransferPanel} from './TransferPanel';
+import {DownloadStage} from './DownloadStage';
 import {TouchControlPreview} from '../settings/TouchControlPreview';
 import {useSurfaceNavigation} from '../../navigation/surface-navigation';
 import {useLocale} from '../../i18n';
@@ -31,7 +32,7 @@ export function PlayerControls({session}: {session: BrowserSession}) {
   return <><TitleNetworkOverlay model={session.titleNetwork}/>{network && <NetplayConnectionWindow network={network} calibration={session.calibration} english={locale === 'en'} onReturn={navigation.closeSurface}/>}
     {diagnostics && <RuntimeDiagnostics model={diagnostics} netplay={netplay}><NetplayCalibrationReport model={session.calibration} english={locale === 'en'} currentNetwork={() => gameplay?.getSnapshot().diagnostics.runtimeNetplayQualityDiag ?? ''}/></RuntimeDiagnostics>}
     <aside className="netplay-player-status" id="netplayPlayerStatus" aria-label={t('multiplayer.connection')} hidden={!network?.playerStatusVisible}>{network?.playerStatus.map((row, index) => <span key={index} title={row.title}>{row.text}</span>)}</aside>
-    <TransferPanel model={session.transfer}/><span id="playerStatus" className="visually-hidden" role="status">{feedback.playerStatus}</span>
+    <DownloadStage session={session}/><TransferPanel model={session.transfer}/><span id="playerStatus" className="visually-hidden" role="status">{feedback.playerStatus}</span>
     {settings && <PlayerUtilities session={session} settings={settings}/>}
     {settings && state.bootTouchPreview && !session.getActiveSettings() && navigation.surface !== 'touch' && <BootTouchControls session={session} settings={settings}/>}
     {session.getActiveSettings() && navigation.surface !== 'touch' && state.playerOpen && <GameplayControls session={session}/>}</>;

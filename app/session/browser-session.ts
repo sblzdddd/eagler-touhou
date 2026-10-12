@@ -400,7 +400,7 @@ export function createBrowserSession({document, window, baseUrl: configuredBaseU
     if (!element || element === frame) return;
     if (frame) throw new Error('Launcher cannot replace its live Runtime iframe');
     frame = element;
-    runtime = createRuntimeService({frame: element, hostWindow: window, baseUrl, translate: t, network, worker: appShellDeployment ? appShell!.activeWorker() : null, onLocalResourceProgress: transfer.localProgress, onWarning: reportError,
+    runtime = createRuntimeService({frame: element, hostWindow: window, baseUrl, translate: t, network, worker: appShellDeployment ? appShell!.activeWorker() : null, onLocalResourceProgress: transfer.localProgress, onRuntimeFiles: transfer.runtimeFiles, onWarning: reportError,
       onFrameRetired() {
         // Reuse the same React-owned node, but discard the completed game's
         // browsing context and its child-history entries before the next launch.

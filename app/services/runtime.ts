@@ -28,7 +28,7 @@ import {componentFileIds} from '../../package/package-generation.mjs';
 import { createRuntimeSessionOwner, type RuntimeSessionToken } from '../../src/launcher/runtime-session.mts';
 import { createManagedRuntimeGenerationLease } from '../../src/launcher/runtime-generation-lease.mts';
 import { managedRuntimeUrl, readManagedRuntimeData, readManagedRuntimeResource } from '../../src/launcher/runtime-preparation.mts';
-import { prepareRuntimeLaunch } from '../../src/launcher/runtime-launch.mts';
+import { prepareRuntimeLaunch, type RuntimeFileProgress } from '../../src/launcher/runtime-launch.mts';
 import { createNetworkActivityTracker, type NetworkActivitySnapshot } from '../../src/launcher/network-activity.mts';
 import { confirmRuntimeClose, type RuntimeCloseDecision } from '../../src/launcher/launcher-lifecycle.mts';
 import { deliverRuntimeInput, type HostedKeySpec, type TouchRuntimeContext, type RuntimeMessageTarget } from '../../src/launcher/touch-runtime-protocol.mts';
@@ -215,6 +215,7 @@ export interface RuntimeServiceOptions {
   /** Optional document-wide tracker; supplying it avoids a second fetch owner. */
   network?: ReturnType<typeof createNetworkActivityTracker>;
   onLocalResourceProgress?: (progress: RuntimeLocalResourceProgress) => void;
+  onRuntimeFiles?: (progress: RuntimeFileProgress) => void;
   onWarning?: (error: unknown) => void;
   /** Discard the retired child browsing context while retaining its host node. */
   onFrameRetired?: () => void;
@@ -816,7 +817,7 @@ export function createRuntimeService(options: RuntimeServiceOptions) {
             // Keep current main's complete-generation verification + idle-based
             // download helper. No replacement timeout or latest-file fallback.
             const prepared = await deps.prepareCode(entry, { baseUrl, fetchImpl: network.fetch as typeof fetch,
-              exclude: excluded, worker: offlineWorker || options.worker });
+              exclude: excluded, worker: offlineWorker || options.worker, onFile: progress => options.onRuntimeFiles?.(progress) });
             assertOperation(); assertCurrent(token);
             entry = prepared.url; codeGeneration = prepared.generation;
           }

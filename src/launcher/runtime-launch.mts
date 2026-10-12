@@ -11,12 +11,20 @@ export interface PreparedRuntime {
   cached: boolean;
 }
 interface WorkerLike { postMessage(message: unknown, transfer: Transferable[]): void; }
+export interface RuntimeFileProgress {
+  loaded: number;
+  total: number;
+  name: string;
+  bytesLoaded: number;
+  bytesTotal: number;
+}
 interface LaunchOptions {
   baseUrl?: string;
   fetchImpl?: typeof fetch;
   worker?: WorkerLike | null | PromiseLike<WorkerLike | null>;
   exclude?: readonly string[];
   timeoutMs?: number;
+  onFile?: (progress: RuntimeFileProgress) => void;
 }
 async function digest(bytes: ArrayBuffer): Promise<string> {
   return Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)),
@@ -48,7 +56,7 @@ async function activeWorker(base: string): Promise<WorkerLike | null> {
  * iframe or a set of mutable URLs. Storage restrictions still allow HTTP use. */
 export async function prepareRuntimeLaunch(runtime: string, {
   baseUrl = new URL("./", globalThis.location.href).href,
-  fetchImpl = globalThis.fetch.bind(globalThis), worker, exclude = [], timeoutMs = 8000,
+  fetchImpl = globalThis.fetch.bind(globalThis), worker, exclude = [], timeoutMs = 8000, onFile,
 }: LaunchOptions = {}): Promise<PreparedRuntime> {
   const base = new URL("./", baseUrl);
   const requested = new URL(runtime, base);
@@ -123,7 +131,12 @@ export async function prepareRuntimeLaunch(runtime: string, {
       const directory = runtimeGenerationBase(group.root, descriptor.generation);
       // No cache authority is available. Verify this complete set first; normal
       // subsequent HTTP requests still address immutable, never latest, files.
-      for (const file of descriptor.files) await network(new URL(directory + file.path, base).href, async (response, progress) => {
+      const bytesTotal = descriptor.files.reduce((sum, file) => sum + file.bytes, 0);
+      let bytesLoaded = 0;
+      for (let index = 0; index < descriptor.files.length; index++) {
+        const file = descriptor.files[index];
+        onFile?.({loaded: index, total: descriptor.files.length, name: file.path.split("/").pop() || file.path, bytesLoaded, bytesTotal});
+        await network(new URL(directory + file.path, base).href, async (response, progress) => {
         // Bound inactivity, not the total transfer time of a large WASM.
         const reader = response.body?.getReader();
         let bytes: ArrayBuffer;
@@ -147,7 +160,10 @@ export async function prepareRuntimeLaunch(runtime: string, {
           bytes = combined.buffer;
         }
         if (bytes.byteLength !== file.bytes || await digest(bytes) !== file.sha256) throw new Error(`Runtime integrity mismatch: ${file.path}`);
-      }, 2);
+        }, 2);
+        bytesLoaded += file.bytes;
+      }
+      onFile?.({loaded: descriptor.files.length, total: descriptor.files.length, name: "", bytesLoaded: bytesTotal, bytesTotal});
       const selected = new URL(runtimeGenerationEntry(group.root, descriptor), base);
       selected.search = requested.search; selected.searchParams.delete("v"); selected.hash = requested.hash;
       return { url: selected.href, generation: descriptor.generation, cached: false };
