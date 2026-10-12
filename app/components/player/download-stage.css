@@ -1,4 +1,0 @@
-.load-stage{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding:24px;background:#000;color:#f2f2f2;pointer-events:none}
-.load-stage-logo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.load-stage-logo svg{width:min(46vh,260px);height:auto;display:block}
-.load-stage-text{position:relative;z-index:1;margin:0;font:16px/1.7 sans-serif;text-align:center;white-space:pre-wrap;text-shadow:0 1px 2px #000,0 0 8px #000}

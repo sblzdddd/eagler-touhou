@@ -29,13 +29,6 @@ export interface TransferSnapshot {
   midiNoticeVisible: boolean;
   midiNoticeRevision: number;
   revision: number;
-  fileLoaded: number;
-  fileTotal: number;
-  fileName: string;
-  fileBytesLoaded: number;
-  fileBytesTotal: number;
-  activeLoaded: number;
-  activeTotal: number;
 }
 export interface TransferModelPorts {
   retryMusic(timeoutMs: number): Promise<unknown>;
@@ -87,8 +80,7 @@ export function createTransferModel({translate: t, context, ports, frames,
     amount: '0 / 0 MiB', barWidth: '0%', speedText: '0 KiB/s', etaText: '--:--', indeterminate: false,
     networkOwned: false, networkActive: false, warningVisible: false, warningText: '', retryVisible: false,
     cancelVisible: false, cancelLabel: t('player.cancelDownload'), debugVisible: false, debugText: '',
-    midiNoticeVisible: false, midiNoticeRevision: 0, revision: 0, fileLoaded: 0, fileTotal: 0, fileName: '',
-    fileBytesLoaded: 0, fileBytesTotal: 0, activeLoaded: 0, activeTotal: 0});
+    midiNoticeVisible: false, midiNoticeRevision: 0, revision: 0});
   function publish(patch: Partial<TransferSnapshot>) {
     if (disposed) return;
     snapshot = Object.freeze({...snapshot, ...patch, revision: snapshot.revision + 1});
@@ -99,34 +91,28 @@ export function createTransferModel({translate: t, context, ports, frames,
   const networkMiB = (value: number) => `${(Math.max(0, Number(value) || 0) / 1048576).toFixed(1)} MiB`;
   function renderNetwork() {
     if (!network.count) {
-      publish({networkActive: false, indeterminate: false, activeLoaded: 0, activeTotal: 0, ...(snapshot.networkOwned ? {hidden: true, networkOwned: false} : {})}); return;
+      publish({networkActive: false, indeterminate: false, ...(snapshot.networkOwned ? {hidden: true, networkOwned: false} : {})}); return;
     }
     const current = [...network.active].reverse().find(task => task.phase === 'receiving' && task.loaded > 0) || network.active.at(-1);
     if (!current) return;
-    let currentName = current.label;
-    if (currentName === 'SERVER REQUEST' && current.url) {
-      try { currentName = decodeURIComponent(current.url.split('/').pop()?.split('?')[0] || currentName); }
-      catch { currentName = current.label; }
-    }
     const elapsed = Math.max((now() - current.startedAt) / 1000, .1), instant = current.loaded / elapsed;
     const known = network.total > 0, currentKnown = current.total > 0;
     publish({hidden: false, networkActive: true, networkOwned: true,
-      title: current.title || t('transfer.serverRequesting'), label: network.count > 1 ? `${currentName}  +${network.count - 1}` : currentName,
+      title: current.title || t('transfer.serverRequesting'), label: network.count > 1 ? `${current.label}  +${network.count - 1}` : current.label,
       amount: known ? `${networkMiB(network.loaded)} / ${networkMiB(network.total)}` : current.phase === 'requesting' ? t('transfer.waitingServer')
         : current.loaded > 0 ? t('transfer.received', {amount: networkMiB(current.loaded)}) : t('transfer.receiving'),
       barWidth: known ? `${Math.min(100, network.loaded / network.total * 100).toFixed(1)}%`
         : currentKnown ? `${Math.min(100, current.loaded / current.total * 100).toFixed(1)}%` : '34%',
       indeterminate: !known && !currentKnown, speedText: current.phase === 'requesting' ? t('transfer.waiting') : speedText(instant),
       etaText: currentKnown && instant > 1024 ? transferClock((current.total - current.loaded) / instant) : t('transfer.requestCount', {count: network.count}),
-      warningVisible: false, retryVisible: false, activeLoaded: current.loaded, activeTotal: current.total});
+      warningVisible: false, retryVisible: false});
   }
   function hide() {
     if (disposed) return;
     if (network.count > 0) {renderNetwork(); return;}
     clearHide(); speed = 0;
     publish({hidden: true, networkOwned: false, indeterminate: false, warningVisible: false, retryVisible: false,
-      debugVisible: false, debugText: '', kind: '', mode: '', fileLoaded: 0, fileTotal: 0, fileName: '',
-      fileBytesLoaded: 0, fileBytesTotal: 0, activeLoaded: 0, activeTotal: 0});
+      debugVisible: false, debugText: '', kind: '', mode: ''});
   }
   function hideLater() {if (disposed) return; clearHide(); hideTimer = timers.setTimeout(hide, 2200);}
   function show(message: TransferPresentation) {
@@ -191,12 +177,6 @@ export function createTransferModel({translate: t, context, ports, frames,
     subscribe(listener: () => void) {listeners.add(listener); return () => {listeners.delete(listener);};}, getSnapshot: () => snapshot,
     runtimeTransfer, musicFailure, musicComplete, localProgress, languageFailure, hide, playerDebug, midiFallback,
     revealGameData() {publish({hidden: false, kind: 'game'});},
-    runtimeFiles(progress: {loaded: number; total: number; name: string; bytesLoaded: number; bytesTotal: number}) {
-      if (disposed) return;
-      clearHide();
-      publish({hidden: false, fileLoaded: Math.max(0, progress.loaded), fileTotal: Math.max(0, progress.total),
-        fileName: progress.name, fileBytesLoaded: Math.max(0, progress.bytesLoaded), fileBytesTotal: Math.max(0, progress.bytesTotal)});
-    },
     runtimeEvent(message: RuntimeEventMessage) {
       if (disposed || message.epoch !== context().epoch) return;
       if (message.event === 'transfer') runtimeTransfer(message);
@@ -210,7 +190,6 @@ export function createTransferModel({translate: t, context, ports, frames,
       if (disposed) return;
       local = null;
       ports.playerStatus(t(plan.generation ? 'runtime.preparingLocal' : 'runtime.loadingGameData'));
-      publish({fileLoaded: 0, fileTotal: 0, fileName: '', fileBytesLoaded: 0, fileBytesTotal: 0});
       show({kind: 'game', mode: 'runtime', title: t(plan.generation ? 'runtime.preparingLocal' : 'runtime.requestingComponent'),
         label: t(plan.generation ? 'runtime.localGameLabel' : 'runtime.requestingComponentLabel', {game: plan.game.toUpperCase()}),
         phase: plan.generation ? 'preparing' : 'requesting', indeterminate: true});
