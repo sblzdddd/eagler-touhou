@@ -63,11 +63,12 @@ for (const [game, entry] of Object.entries(manifest.games)) {
 // Prepared content outside the Launcher tree must still produce HTTP URLs,
 // rather than Windows drive schemes or Unix filesystem-root URLs.
 const project = fileURLToPath(new URL("..", import.meta.url));
-for (const game of ["th06", "th07", "th09", "th10", "th11", "th15", "th20"]) {
+for (const game of ["th06", "th07", "th09", "th10", "th11", "th15", "th20", "thsss"]) {
   const contentRoot = join(root, game);
-  const musicDirectory = ["th09", "th11", "th15"].includes(game) ? "music" : "bgm-ogg";
+  const musicDirectory = game === "thsss" ? "BGM" : ["th09", "th11", "th15"].includes(game) ? "music" : "bgm-ogg";
+  const dataName = game === "thsss" ? "thsss.dat" : `${game}.data`;
   await mkdir(join(contentRoot, musicDirectory), { recursive: true });
-  await writeFile(join(contentRoot, `${game}.data`), fixtureData);
+  await writeFile(join(contentRoot, dataName), fixtureData);
   if (preloadGames.includes(game)) {
     await writeFile(join(contentRoot, `${game}.js`), fixtureScript(game));
     const wavRoot = game === "th06" ? join(contentRoot, "bgm") : contentRoot;
@@ -84,7 +85,7 @@ for (const game of ["th06", "th07", "th09", "th10", "th11", "th15", "th20"]) {
      console.log(JSON.stringify(await createDevelopmentSiteManifest({ games: ['${game}'] })));`,
   ], { cwd: project, encoding: "utf8", env: { ...process.env, [`EAGLER_${game.toUpperCase()}_CONTENT_DIR`]: contentRoot } }));
   const entry = prepared.games[game];
-  assert.equal(resolve(project, entry.gameData.source), join(contentRoot, `${game}.data`));
+  assert.equal(resolve(project, entry.gameData.source), join(contentRoot, dataName));
   assert.match(entry.gameData.source, /^\.\.\//);
   assert.match(entry.music.ogg.base, /^\.\.\//);
   const url = new URL(entry.music.ogg.files[0], new URL(entry.music.ogg.base, "http://127.0.0.1:8130/"));

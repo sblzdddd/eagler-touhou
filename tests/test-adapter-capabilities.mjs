@@ -246,7 +246,7 @@ for (const [option, behavior] of Object.entries(RUNTIME_CONFIGURE_OPTION_BEHAVIO
 // but current formal adapters are not allowed to use them to opt out of the
 // required product surface.
 for (const [game, product] of Object.entries(PRODUCT_GAMES)) {
-  assert.match(product.replay?.prefix || "", /^th\d+$/, `${game}: Replay management is required`);
+  assert.match(product.replay?.prefix || "", /^th[A-Za-z0-9]+$/, `${game}: Replay management is required`);
   assert.deepEqual(Object.keys(product.musicCapabilities), ["midi"], `${game}: required OGG/no-music support must not become per-product opt-outs`);
 }
 

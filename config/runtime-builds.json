@@ -125,6 +125,13 @@
       "variants": {
         "normal": { "features": { "thcrap": false, "thprac": false }, "cache": {} }
       }
+    },
+    "thsss": {
+      "builder": "prebuilt",
+      "workspaceRepository": "thsss",
+      "variants": {
+        "normal": { "features": { "thcrap": false, "thprac": false }, "cache": {} }
+      }
     }
   }
 }

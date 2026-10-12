@@ -52,6 +52,12 @@
       "music": ["midi"],
       "thprac": false,
       "runtimeVariants": ["normal"]
+    },
+    "thsss": {
+      "languages": ["ja"],
+      "music": ["ogg"],
+      "thprac": false,
+      "runtimeVariants": ["normal"]
     }
   }
 }

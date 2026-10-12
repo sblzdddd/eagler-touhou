@@ -26,6 +26,7 @@ const validInput = {
       th11: "original/th11",
       th15: "original/th15",
       th20: "original/th20",
+      thsss: "original/thsss",
     },
     LanguagePackDirectories: {
       th06: "languages/th06",
@@ -65,6 +66,7 @@ const legacyInput = {
     Th10Directory: "original/th10",
     Th11Directory: "original/th11",
     Th20Directory: "original/th20",
+    ThSSSDirectory: "original/thsss",
     GameDirectories: { th15: "original/th15" },
     Th06LanguagePacks: "languages/th06",
     Th07LanguagePacks: "languages/th07",
