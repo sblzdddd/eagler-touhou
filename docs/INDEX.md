@@ -1,6 +1,6 @@
 # 文档总表
 
-共 224 份可读文档，包含贡献入口、适配说明、服务文档、生成报告、许可证和历史记录。由 `npm run docs:index` 更新。
+共 227 份可读文档，包含贡献入口、适配说明、服务文档、生成报告、许可证和历史记录。由 `npm run docs:index` 更新。
 
 项目说明按当前目录重写；许可证保留原文，生成报告由各自工具更新。原有 498 份 Markdown 的逐篇去向见[旧文档去向](history/INDEX.md)。
 
@@ -40,6 +40,7 @@
 | 作品入口 | [ports/th15-mp/README.md](../ports/th15-mp/README.md) | 東方紺珠伝 TH15 多人版 |
 | 作品入口 | [ports/th15/README.md](../ports/th15/README.md) | 東方紺珠伝 TH15 |
 | 作品入口 | [ports/th20/README.md](../ports/th20/README.md) | TH20 · 东方锦上京 |
+| 作品入口 | [ports/thsss/README.md](../ports/thsss/README.md) | THSSS · 东方夏夜祭 |
 | 作品适配表 | [ports/th06/ADAPTATION.md](../ports/th06/ADAPTATION.md) | th06 适配检查 |
 | 作品适配表 | [ports/th07/ADAPTATION.md](../ports/th07/ADAPTATION.md) | th07 适配检查 |
 | 作品适配表 | [ports/th075-mp/ADAPTATION.md](../ports/th075-mp/ADAPTATION.md) | th075 MP 适配检查 |
@@ -54,6 +55,7 @@
 | 作品适配表 | [ports/th15-mp/ADAPTATION.md](../ports/th15-mp/ADAPTATION.md) | th15 MP 适配检查 |
 | 作品适配表 | [ports/th15/ADAPTATION.md](../ports/th15/ADAPTATION.md) | th15 适配检查 |
 | 作品适配表 | [ports/th20/ADAPTATION.md](../ports/th20/ADAPTATION.md) | th20 适配检查 |
+| 作品适配表 | [ports/thsss/ADAPTATION.md](../ports/thsss/ADAPTATION.md) | thsss 适配检查 |
 | 作品源码文档 | [ports/th06/docs/DEVELOPMENT.md](../ports/th06/docs/DEVELOPMENT.md) | TH06 开发指南 |
 | 作品源码文档 | [ports/th07/docs/DEVELOPMENT.md](../ports/th07/docs/DEVELOPMENT.md) | TH07 开发指南 |
 | 作品源码文档 | [ports/th07/vendored/README.md](../ports/th07/vendored/README.md) | 第三方构建依赖 |
@@ -70,6 +72,7 @@
 | 作品源码文档 | [ports/th15-mp/docs/DEVELOPMENT.md](../ports/th15-mp/docs/DEVELOPMENT.md) | TH15 多人版开发指南 |
 | 作品源码文档 | [ports/th15/docs/DEVELOPMENT.md](../ports/th15/docs/DEVELOPMENT.md) | TH15 开发指南 |
 | 作品源码文档 | [ports/th20/docs/DEVELOPMENT.md](../ports/th20/docs/DEVELOPMENT.md) | TH20 开发指南 |
+| 作品源码文档 | [ports/thsss/docs/DEVELOPMENT.md](../ports/thsss/docs/DEVELOPMENT.md) | THSSS 开发指南 |
 | 公共库 | [common/README.md](../common/README.md) | common/ |
 | 公共库 | [common/browser/README.md](../common/browser/README.md) | 浏览器共享模块 |
 | 公共库 | [common/contracts/README.md](../common/contracts/README.md) | 客户端与服务端契约 |

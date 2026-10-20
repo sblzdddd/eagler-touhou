@@ -12,7 +12,7 @@
     "th11": "ports/th11",
     "th15": "ports/th15",
     "th20": "ports/th20",
-    "thsss": "THSSS-WASM",
+    "thsss": "ports/thsss",
     "thprac": "thprac",
     "dependencies": "dependencies",
     "toolchains": "toolchains",

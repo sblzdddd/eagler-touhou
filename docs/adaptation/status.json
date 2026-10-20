@@ -2405,6 +2405,33 @@
           "status": "passed"
         }
       ]
+    },
+    {
+      "game": "thsss",
+      "variant": "normal",
+      "directory": "ports/thsss",
+      "sourceDigest": null,
+      "sourceSelection": "external-repository",
+      "dependencies": [],
+      "features": {
+        "thcrap": false,
+        "thprac": false
+      },
+      "command": [
+        "node",
+        "tools/docs/check.mjs"
+      ],
+      "gates": [
+        {
+          "id": "source-inputs",
+          "status": "failed",
+          "level": "source-inputs",
+          "checks": [
+            "BUILD-06"
+          ],
+          "error": "THSSS 的源码身份在 THSSS-WASM 仓库，ports/thsss 登记启动器入口。"
+        }
+      ]
     }
   ]
 }
