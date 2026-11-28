@@ -24,16 +24,16 @@ flowchart LR
 
 - **玩法直触（`touch` / `touch-unlimited`）**：手指归一化位移 × 灵敏度 → 像素队列；每逻辑帧按 `HighSpeed`/`LowSpeed`（斜向 ×0.71）取出一步，直接改机体坐标，**不再**把直触写成 `Left/Right/Up/Down`。
 - **无限速**：整段队列一次交给 Apply 入口（现有 `TouchShift` / `ShiftBy` 路径），与限速共用。
-- **抬手**：primary 抬起时清空队列并停止位移（对齐 [ports/th01/web/direct-drag.js](ports/th01/web/direct-drag.js)）；手指仍按住时保留未走完的距离（对齐适配表「拖动距离保留」的在按含义）。
+- **抬手**：primary 抬起时清空队列并停止位移（对齐 [ports/th01/web/direct-drag.js](../../th01/web/direct-drag.js)）；手指仍按住时保留未走完的距离（对齐适配表「拖动距离保留」的在按含义）。
 - **第二指低速 / HUD 射击 Bomb / 菜单手势**：继续走现有 `key-owners` + `menu-gestures`。
-- **虚拟摇杆**：启动器已下发连续轴 `joystickX/Y ∈ [-32767,32767]`（见 [player-joystick.ts](eagler-touhou/launcher/app/services/player-joystick.ts)）。本计划**不再**把轴压成方向键；经同一 `ApplyTouch` / `Move` patch 吃模拟量。`joystick` 在 JS 侧 quantize 成 8 向单位向量再 × 原速；`joystick-free` 保留连续方向与推杆幅度（TOUCH-03 / TOUCH-04）。
+- **虚拟摇杆**：启动器已下发连续轴 `joystickX/Y ∈ [-32767,32767]`（见 [player-joystick.ts](../../../launcher/app/services/player-joystick.ts)）。本计划**不再**把轴压成方向键；经同一 `ApplyTouch` / `Move` patch 吃模拟量。`joystick` 在 JS 侧 quantize 成 8 向单位向量再 × 原速；`joystick-free` 保留连续方向与推杆幅度（TOUCH-03 / TOUCH-04）。
 - **Replay 分流**：纯键盘局继续 `.rpy`；**一旦本局用过触控位移（ApplyTouch 非零或触控移动模式实际生效）则录成 `.trpy`**，与原作带从文件名上区分，避免污染桌面原版播放器。
 
 ## 实现步骤
 
 ### 1. 位移队列改为产出像素步进
 
-改 [THSSS.Browser/wwwroot/host/input/touch-movement.mjs](THSSS.Browser/wwwroot/host/input/touch-movement.mjs)：
+改 [THSSS.Browser/wwwroot/host/input/touch-movement.mjs](../THSSS.Browser/wwwroot/host/input/touch-movement.mjs)：
 
 - `drain({ focus })` 对限速返回 `{ shiftX, shiftY }`（长度 ≤ 本帧原速，斜向已乘 0.71），不再返回方向布尔。
 - `unlimited` 仍一次倒空为 `shiftX/shiftY`。
@@ -41,7 +41,7 @@ flowchart LR
 
 ### 2. Bridge：直触与摇杆都走 Shift，不占方向键
 
-改 [THSSS.Browser/wwwroot/host/input/touch-bridge.mjs](THSSS.Browser/wwwroot/host/input/touch-bridge.mjs)：
+改 [THSSS.Browser/wwwroot/host/input/touch-bridge.mjs](../THSSS.Browser/wwwroot/host/input/touch-bridge.mjs)：
 
 - `presented()`：
   - `touch` / `touch-unlimited`：`drain` → `shift(dx,dy)`。
@@ -55,7 +55,7 @@ flowchart LR
 ### 3. 位移必须进 `Move` 时序（patch）
 
 - 帧前钩子：每逻辑帧「先 drain/stick → ApplyTouch，再 MainProcess」。
-- 扩展 [patches/003-frame-touch-host.patch](patches/003-frame-touch-host.patch)：
+- 扩展 [patches/003-frame-touch-host.patch](../patches/003-frame-touch-host.patch)：
   - `ApplyTouch(dx,dy)` 记下本帧待应用位移。
   - `Move()`：有触控位移则更新坐标并设 `Vx = dx`、`Vy = -dy`；不读方向键。
   - 无触控时保持原方向键 `Move`。
@@ -63,7 +63,7 @@ flowchart LR
 
 ### 4. 触控 Replay 用 `.trpy`，不用 `.rpy`
 
-现状：每帧 [BaseStage](THSSS/Shooting/BaseStage.cs) `WriteKey(Key2Hex())` 仅 **2 字节**键位；`ApplyTouch` 不进带。
+现状：每帧 [BaseStage](../vendor/THSSS-src/Shooting/BaseStage.cs) `WriteKey(Key2Hex())` 仅 **2 字节**键位；`ApplyTouch` 不进带。
 
 ```mermaid
 flowchart LR
@@ -81,7 +81,7 @@ flowchart LR
   - 关卡标记 `57358`、结束 `4080`：仍 2 字节。
   - 普通帧：`uint16 keys` + `int16 dx` + `int16 dy` = 6 字节。
   - 尾部 `ReplayInfo` 含 `TouchDelta=1`（或文件头魔数），加载 `.trpy` 时走 6 字节读路径。
-- 补丁：[Replay.cs](THSSS/Shooting/Replay.cs)、[BaseStage.cs](THSSS/Shooting/BaseStage.cs)、存读菜单 [MenuGroup_ReplaySaver](THSSS/Shooting/MenuGroup_ReplaySaver.cs) / [Loader](THSSS/Shooting/MenuGroup_ReplayLoader.cs) / [Namer](THSSS/Shooting/MenuGroup_ReplayNamer.cs)：列表同时扫 `.rpy` 与 `.trpy`；保存名带对扩展名。
+- 补丁：[Replay.cs](../vendor/THSSS-src/Shooting/Replay.cs)、[BaseStage.cs](../vendor/THSSS-src/Shooting/BaseStage.cs)、存读菜单 [MenuGroup_ReplaySaver](../vendor/THSSS-src/Shooting/MenuGroup_ReplaySaver.cs) / [Loader](../vendor/THSSS-src/Shooting/MenuGroup_ReplayLoader.cs) / [Namer](../vendor/THSSS-src/Shooting/MenuGroup_ReplayNamer.cs)：列表同时扫 `.rpy` 与 `.trpy`；保存名带对扩展名。
 - 回放 `.trpy`：`ReadKey` + `ReadTouch` → `Hex2Key` + `ApplyTouch`；`OnReplay` 忽略 live 触控。
 - 回放 `.rpy`：行为与原作一致，无 touch 字段。
 
@@ -93,7 +93,7 @@ flowchart LR
 
 | 位置 | 需要 |
 | --- | --- |
-| [THSSS.Browser/wwwroot/host/storage/files.mjs](THSSS.Browser/wwwroot/host/storage/files.mjs) | 白名单增加 `thSSS_*.trpy`、`AutoSave.trpy`（与现有 `.rpy` 并列），否则 IndexedDB/list/write 会拒文件。 |
+| [THSSS.Browser/wwwroot/host/storage/files.mjs](../THSSS.Browser/wwwroot/host/storage/files.mjs) | 白名单增加 `thSSS_*.trpy`、`AutoSave.trpy`（与现有 `.rpy` 并列），否则 IndexedDB/list/write 会拒文件。 |
 | eagler-touhou 存档/Replay UI | 若按扩展名过滤「可导入/导出 Replay」，需承认 `.trpy`；展示上可标「触控 Replay」。 |
 | product / 包规范 | 若有 Replay 文件名契约或上传校验，为 `thsss` 登记 `.trpy`。 |
 | TOUCH-10 落率 | 仍属启动器结算；与 `.trpy` 分流独立，本轮可不做。 |
@@ -102,7 +102,7 @@ flowchart LR
 
 ### 5. 菜单 / 手势小对标
 
-[menu-gestures.mjs](THSSS.Browser/wwwroot/host/input/menu-gestures.mjs)：play 下 ≥4 触点 pulse `Escape`。
+[menu-gestures.mjs](../THSSS.Browser/wwwroot/host/input/menu-gestures.mjs)：play 下 ≥4 触点 pulse `Escape`。
 
 ### 6. 单元测试与补丁刷新
 
@@ -112,7 +112,7 @@ flowchart LR
 
 ### 7. 挂进 eagler-touhou 做本地网页验收
 
-按 [AGENTS.md](THSSS-WASM/AGENTS.md) 与 [DEVELOPMENT.md](eagler-touhou/launcher/docs/DEVELOPMENT.md)；本地能跑即可，`testOnly` + `buildOptIn`。
+按 [AGENTS.md](../AGENTS.md) 与 [DEVELOPMENT.md](../../../launcher/docs/DEVELOPMENT.md)；本地能跑即可，`testOnly` + `buildOptIn`。
 
 **7.1** `dotnet publish` → `npm run stage:eagler` → `build-eagler/`。
 

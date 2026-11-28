@@ -1,6 +1,6 @@
 # 文档总表
 
-共 671 份可读文档，包含贡献入口、适配说明、服务文档、生成报告、许可证和历史记录。由 `npm run docs:index` 更新。
+共 683 份可读文档，包含贡献入口、适配说明、服务文档、生成报告、许可证和历史记录。由 `npm run docs:index` 更新。
 
 项目说明按当前目录重写；许可证保留原文，生成报告由各自工具更新。原有 498 份 Markdown 的逐篇去向见[旧文档去向](history/INDEX.md)。
 
@@ -63,6 +63,8 @@
 | 作品入口 | [ports/th17/README.md](../ports/th17/README.md) | TH17 · 东方鬼形兽 |
 | 作品入口 | [ports/th19/README.md](../ports/th19/README.md) | 东方兽王园 TH19 |
 | 作品入口 | [ports/th20/README.md](../ports/th20/README.md) | TH20 · 东方锦上京 |
+| 作品入口 | [ports/thsss/README.en.md](../ports/thsss/README.en.md) | thsss README |
+| 作品入口 | [ports/thsss/README.md](../ports/thsss/README.md) | thsss（東方夏夜祭） |
 | 作品适配表 | [ports/th01/ADAPTATION.md](../ports/th01/ADAPTATION.md) | th01 适配检查 |
 | 作品适配表 | [ports/th02/ADAPTATION.md](../ports/th02/ADAPTATION.md) | th02 适配检查 |
 | 作品适配表 | [ports/th03/ADAPTATION.md](../ports/th03/ADAPTATION.md) | th03 适配检查 |
@@ -90,6 +92,7 @@
 | 作品适配表 | [ports/th17/ADAPTATION.md](../ports/th17/ADAPTATION.md) | th17 适配检查 |
 | 作品适配表 | [ports/th19/ADAPTATION.md](../ports/th19/ADAPTATION.md) | th19 适配检查 |
 | 作品适配表 | [ports/th20/ADAPTATION.md](../ports/th20/ADAPTATION.md) | th20 适配检查 |
+| 作品适配表 | [ports/thsss/ADAPTATION.md](../ports/thsss/ADAPTATION.md) | thsss 适配检查 |
 | 作品源码文档 | [ports/th01/README-NETPLAY.md](../ports/th01/README-NETPLAY.md) | 原生移植版 UDP 联机 |
 | 作品源码文档 | [ports/th01/README-PUBLIC.md](../ports/th01/README-PUBLIC.md) | 公网联机 |
 | 作品源码文档 | [ports/th01/README-UPSTREAM.md](../ports/th01/README-UPSTREAM.md) | TH01《东方灵异传》· 原生移植与多人合作 |
@@ -250,6 +253,12 @@
 | 作品源码文档 | [ports/th19/docs/DEVELOPMENT.md](../ports/th19/docs/DEVELOPMENT.md) | TH19 开发与构建 |
 | 作品源码文档 | [ports/th19/docs/REPLAY.md](../ports/th19/docs/REPLAY.md) | 旁观与扩展录像 |
 | 作品源码文档 | [ports/th20/docs/DEVELOPMENT.md](../ports/th20/docs/DEVELOPMENT.md) | TH20 开发指南 |
+| 作品源码文档 | [ports/thsss/PRACTICE.md](../ports/thsss/PRACTICE.md) | thsss 练习 |
+| 作品源码文档 | [ports/thsss/README-UPSTREAM.md](../ports/thsss/README-UPSTREAM.md) | README UPSTREAM |
+| 作品源码文档 | [ports/thsss/docs/adaptation-roadmap.plan.md](../ports/thsss/docs/adaptation-roadmap.plan.md) | THSSS-WASM 适配收口（README 路线图 + Prac） |
+| 作品源码文档 | [ports/thsss/docs/float-verify-patches.md](../ports/thsss/docs/float-verify-patches.md) | VERIFY 浮点对齐补丁（遗留） |
+| 作品源码文档 | [ports/thsss/docs/touch-th01-parity.plan.md](../ports/thsss/docs/touch-th01-parity.plan.md) | THSSS 触控对标 th01 |
+| 作品源码文档 | [ports/thsss/docs/touch-th06.plan.md](../ports/thsss/docs/touch-th06.plan.md) | THSSS 触控对标 th06 |
 | 公共库 | [common/README.md](../common/README.md) | common/ |
 | 公共库 | [common/browser/README.md](../common/browser/README.md) | 浏览器共享模块 |
 | 公共库 | [common/contracts/README.md](../common/contracts/README.md) | 客户端与服务端契约 |
@@ -336,6 +345,7 @@
 | 迁移记录 | [docs/migration/th13-subtree-20261028.md](migration/th13-subtree-20261028.md) | th13 独立源码与子树维护 |
 | 迁移记录 | [docs/migration/th13mp-derivation-20261108.md](migration/th13mp-derivation-20261108.md) | th13-mp 目录来源登记（仓内派生） |
 | 迁移记录 | [docs/migration/th17-subtree-20261106.md](migration/th17-subtree-20261106.md) | TH17 普通版与多人版目录历史 |
+| 迁移记录 | [docs/migration/thsss-subtree-20261122.md](migration/thsss-subtree-20261122.md) | thsss 独立源码与子树维护 |
 | 历史记录 | [archive/README.md](../archive/README.md) | 历史记录 |
 | 历史记录 | [archive/android-bluetooth-arrows-20261127/README.md](../archive/android-bluetooth-arrows-20261127/README.md) | 外接键盘方向键与输入法标记 |
 | 历史记录 | [archive/hk-mirror-relay-20261028/deployment.md](../archive/hk-mirror-relay-20261028/deployment.md) | 香港镜像与统一 Relay 入口 ｜ 2026-10-28 |
@@ -665,6 +675,7 @@
 | 许可证与声明 | [ports/th17/portable/sdl/third_party/miniaudio.LICENSE](../ports/th17/portable/sdl/third_party/miniaudio.LICENSE) | miniaudio |
 | 许可证与声明 | [ports/th19/portable/sdl/third_party/miniaudio.LICENSE](../ports/th19/portable/sdl/third_party/miniaudio.LICENSE) | miniaudio |
 | 许可证与声明 | [ports/th20/portable/sdl/third_party/miniaudio.LICENSE](../ports/th20/portable/sdl/third_party/miniaudio.LICENSE) | miniaudio |
+| 许可证与声明 | [ports/thsss/LICENSE](../ports/thsss/LICENSE) | LICENSE |
 | 许可证与声明 | [services/relay/LICENSE](../services/relay/LICENSE) | LICENSE |
 | 许可证与声明 | [services/telemetry/LICENSE](../services/telemetry/LICENSE) | LICENSE |
 | 许可证与声明 | [services/turn/LICENSE](../services/turn/LICENSE) | LICENSE |
@@ -672,6 +683,7 @@
 | 协作约定 | [launcher/tools/maintainer/operator-delivery/payload/AGENTS.md](../launcher/tools/maintainer/operator-delivery/payload/AGENTS.md) | 部署代理约定 |
 | 协作约定 | [ports/th13-mp/AGENTS.md](../ports/th13-mp/AGENTS.md) | th13-mp 端口局部入口 |
 | 协作约定 | [ports/th13/AGENTS.md](../ports/th13/AGENTS.md) | th13 端口局部入口 |
+| 协作约定 | [ports/thsss/AGENTS.md](../ports/thsss/AGENTS.md) | Agent rules |
 | CI 与协作模板 | [.github/PULL_REQUEST_TEMPLATE.md](../.github/PULL_REQUEST_TEMPLATE.md) | 改动 |
 | 项目文档 | [docs/README.md](README.md) | 文档 |
 | 项目文档 | [docs/TOUHOU_PROGRESS.md](TOUHOU_PROGRESS.md) | 东方作品进度 |

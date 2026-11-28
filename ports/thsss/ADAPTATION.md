@@ -85,7 +85,7 @@
 | AUDIO-02 | [无 BGM 模式](../../docs/adaptation/presentation.md#audio-02) | 已验证 | 启动器选无 BGM 后背景曲关闭，射击等音效仍正常。见[运行验收记录](#运行验收记录)。 |
 | AUDIO-03 | [切曲、渐变、暂停、停止](../../docs/adaptation/presentation.md#audio-03) | 已验证 | 标题 `OP.ogg` → 关卡 `Boss01.ogg`／`Stage01.ogg`；暂停与退出时切曲／停止跟随状态。见[运行验收记录](#运行验收记录)。 |
 | AUDIO-04 | [返回前台后恢复声音](../../docs/adaptation/presentation.md#audio-04) | 已验证 | 切后台自动暂停 BGM，音效不受影响；返回前台从原游标与循环状态续播。见[运行验收记录](#运行验收记录)。 |
-| AUDIO-05 | [音乐资源错误信息](../../docs/adaptation/presentation.md#audio-05) | 已验证 | `/BGM` 缺曲软失败上报 `music-error`；`retry-music` 接受并保留未解决项。选无 BGM 清空待重试。单测 `music-transfer.test.mjs`；playwright AUDIO-05 通过。 |
+| AUDIO-05 | [音乐资源错误信息](../../docs/adaptation/presentation.md#audio-05) | 已验证 | `/BGM` 缺曲软失败上报 `music-error`；`retry-music` 接受并保留未解决项。选无 BGM 清空待重试。单测 `music-transfer.test.mjs`；playwright AUDIO-05 通过。见[运行验收记录](#运行验收记录)。 |
 | AUDIO-06 | [高刷新与音频事件分开](../../docs/adaptation/presentation.md#audio-06) | 已验证 | 高刷下同一真实事件只发声一次，无随显示帧重复触发。见[运行验收记录](#运行验收记录)。 |
 | AUDIO-07 | [音效即时输出](../../docs/adaptation/presentation.md#audio-07) | 已验证 | `OP.ogg` 循环期间菜单确认播出 `se_ok00.wav`；关卡中继续播出 `se_graze.wav`、`se_enep00.wav`、`se_tan00a.wav`、`se_item00.wav`。见[运行验收记录](#运行验收记录)。 |
 | MIDI-01 | [声明 MIDI 选项](../../docs/adaptation/presentation.md#midi-01) | 不适用 | normal：本作使用 OGG 音乐 |
@@ -159,14 +159,14 @@
 
 | 编号 | 检查项 | normal | 记录 |
 | --- | --- | --- | --- |
-| VERIFY-01 | [全部内置 Demo 对照](../../docs/adaptation/validation.md#verify-01) | 不适用 | 没有机制问题，不做像素与逻辑帧对照。 |
-| VERIFY-02 | [长 Replay 样本](../../docs/adaptation/validation.md#verify-02) | 不适用 | 没有机制问题，不做像素与逻辑帧对照。 |
-| VERIFY-03 | [原版基准与内容哈希](../../docs/adaptation/validation.md#verify-03) | 不适用 | 没有机制问题，不做像素与逻辑帧对照。 |
-| VERIFY-04 | [读取固定基准](../../docs/adaptation/validation.md#verify-04) | 不适用 | 没有机制问题，不做像素与逻辑帧对照。 |
-| VERIFY-05 | [单独维护原版基准](../../docs/adaptation/validation.md#verify-05) | 不适用 | 没有机制问题，不做像素与逻辑帧对照。 |
-| VERIFY-06 | [逐逻辑帧比较](../../docs/adaptation/validation.md#verify-06) | 不适用 | 没有机制问题，不做像素与逻辑帧对照。 |
-| VERIFY-07 | [诊断构建与正常构建](../../docs/adaptation/validation.md#verify-07) | 不适用 | 没有机制问题，不做像素与逻辑帧对照。 |
-| VERIFY-08 | [本作状态映射与结束条件](../../docs/adaptation/validation.md#verify-08) | 不适用 | 没有机制问题，不做像素与逻辑帧对照。 |
+| VERIFY-01 | [全部内置 Demo 对照](../../docs/adaptation/validation.md#verify-01) | 待核对 | 本作自 IL 还原，逻辑面与原版同源；Web 侧小误差难与原版逐帧对齐，暂不做 VERIFY。 |
+| VERIFY-02 | [长 Replay 样本](../../docs/adaptation/validation.md#verify-02) | 待核对 | 本作自 IL 还原，逻辑面与原版同源；Web 侧小误差难与原版逐帧对齐，暂不做 VERIFY。 |
+| VERIFY-03 | [原版基准与内容哈希](../../docs/adaptation/validation.md#verify-03) | 待核对 | 本作自 IL 还原，逻辑面与原版同源；Web 侧小误差难与原版逐帧对齐，暂不做 VERIFY。 |
+| VERIFY-04 | [读取固定基准](../../docs/adaptation/validation.md#verify-04) | 待核对 | 本作自 IL 还原，逻辑面与原版同源；Web 侧小误差难与原版逐帧对齐，暂不做 VERIFY。 |
+| VERIFY-05 | [单独维护原版基准](../../docs/adaptation/validation.md#verify-05) | 待核对 | 本作自 IL 还原，逻辑面与原版同源；Web 侧小误差难与原版逐帧对齐，暂不做 VERIFY。 |
+| VERIFY-06 | [逐逻辑帧比较](../../docs/adaptation/validation.md#verify-06) | 待核对 | 本作自 IL 还原，逻辑面与原版同源；Web 侧小误差难与原版逐帧对齐，暂不做 VERIFY。 |
+| VERIFY-07 | [诊断构建与正常构建](../../docs/adaptation/validation.md#verify-07) | 待核对 | 本作自 IL 还原，逻辑面与原版同源；Web 侧小误差难与原版逐帧对齐，暂不做 VERIFY。 |
+| VERIFY-08 | [本作状态映射与结束条件](../../docs/adaptation/validation.md#verify-08) | 待核对 | 本作自 IL 还原，逻辑面与原版同源；Web 侧小误差难与原版逐帧对齐，暂不做 VERIFY。起点为 Splash fadeout 后的起始页。 |
 
 <!-- manual-verification -->
 
@@ -182,7 +182,7 @@
 
 INPUT／TOUCH：开启触摸后左侧出现开火／低速／BOMB／ESC／R。`InputSurface` 与 `TouchShift` 已绑定；标题为 menu，关卡为 play。方向键改变自机附近亮点；Z 连续 `se_plst00.wav`；X 与 BOMB 放出炸弹（现场可见）。标题静止点按 `direct-touch` 播出 `se_ok00.wav`。`touchMovementMode=touch` 时自右向左拖动，亮点从右侧移到左侧。`joystick` 推下标题菜单从 Game Start 移到 Replay，进局后左右推杆移动自机。`hold-button`／`toggle-button` 低速文案与切换正确；`doubleTapBombEnabled` 双击放出炸弹（手动确认）。`touch-controls` 开火锁住后有射击音；`escapeSerial` 进入暂停；`touch-cancel` 成功。布局编辑器可打开并保存。键位面板 WASD 改键生效；手柄映射与摇杆／按钮手动通过。自由摇杆绕圈、双指低速、死后同指续拖、无限速远距对照、无限速落率、对话短按／长按已手动通过。灵敏度 100% 与放大镜缩放见 2026-11-27 记录。
 
-这次核对覆盖 BUILD-05、RUNTIME-02、DISPLAY-06、DISPLAY-07、AUDIO-01、AUDIO-07、SAVE-02、SAVE-03、SAVE-04、INPUT-01、INPUT-02、INPUT-03、INPUT-04、TOUCH-01、TOUCH-03、TOUCH-05、TOUCH-06、TOUCH-08、TOUCH-11、TOUCH-16、TOUCH-17。联机、MIDI、语言包按产品声明记为不适用。AUDIO-05 已接入（实现＋单测）。VERIFY 按没有机制问题跳过逐帧对照。
+这次核对覆盖 BUILD-05、RUNTIME-02、DISPLAY-06、DISPLAY-07、AUDIO-01、AUDIO-07、SAVE-02、SAVE-03、SAVE-04、INPUT-01、INPUT-02、INPUT-03、INPUT-04、TOUCH-01、TOUCH-03、TOUCH-05、TOUCH-06、TOUCH-08、TOUCH-11、TOUCH-16、TOUCH-17。联机、MIDI、语言包按产品声明记为不适用。AUDIO-05 已接入（实现＋单测）。VERIFY-01 至 VERIFY-08：本作自 IL 还原，逻辑面与原版同源；Web 侧小误差难与原版逐帧对齐，暂不做 VERIFY，状态保留待核对。
 
 后续手动＋视觉核对：BUILD-05、RUNTIME-05、RUNTIME-06、PACKAGE-05、INPUT-06、INPUT-07、TOUCH-13、TOUCH-15、DISPLAY-04、DISPLAY-05、DISPLAY-08、AUDIO-02、AUDIO-03、AUDIO-06、REPLAY-01、REPLAY-02、REPLAY-04、REPLAY-05、REPLAY-06、REPLAY-07、SAVE-05、SAVE-06。AUDIO-04：切后台自动暂停 BGM，回前台从原游标续播。RUNTIME-04：切后台／恢复后声音与画面可继续，退出后监听器与临时输入已释放。
 
@@ -224,4 +224,4 @@ TOUCH-02／10／12（2026-11-24 手动）：`touch-unlimited` 远距跟随请求
 
 BUILD：`node tools/workspace.mjs select thsss --variant=normal` 列出 launcher、common、tools、docs、ports/thsss。本机 .NET SDK 10.0.404、wasm-tools 10.0.115、Bun 1.4.4。`dotnet publish THSSS.Browser/THSSS.Browser.csproj -c Release -p:StageGameAssets=false` 退出码 0，`THSSS.Browser.wasm` sha256 `4e719e4cdbf9c07162c31aa82e6e7ad0365129470e2ca4ef12fcf8997fa5f6c3`。帧步进拆出后重新 `npm run stage:eagler`，`shell.mjs` 171717 字节，wasm 哈希未变，`runtime-files.json` 与 5 个运行文件一致。`node tools/ports/check.mjs --game=thsss --variant=normal` 为 10/10。
 
-VERIFY-01 至 VERIFY-08：没有机制问题，不做像素与逻辑帧对照，八项记为不适用。
+VERIFY-01 至 VERIFY-08：本作自 IL 还原（`vendor/THSSS-src/`），逻辑面与原版同源，逻辑问题面相对收窄；Web 实现的小误差难与原版逐帧对齐，暂不做 VERIFY，八项状态保留待核对。工具入口见 `tools/replay-verifier/`。曾为 VERIFY 准备的 `013-float-degree`／`014-float-aim` 补丁仍保留在 `patches/`，已从 `series` 停用，说明见 [float-verify-patches.md](docs/float-verify-patches.md)。

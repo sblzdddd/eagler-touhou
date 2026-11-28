@@ -28,8 +28,9 @@ npm run stage:eagler
 ### Game SSOT
 
 - `vendor/THSSS-src/` is the committed unmodified game source (ILSpy decompile of `vendor/THSSS.exe`).
-- `patches/` holds an ordered series of browser port diffs (`series` + `ownership.json`).
-- `PrepareGameSources prepare` copies `vendor/THSSS-src/` to gitignored `THSSS/` and applies patches. Builds do not run ilspycmd.
+- `patches/` holds an ordered series of browser port diffs (`series` + `ownership.json`). Lines in `series` that start with `#` stay on disk but are not applied.
+- `PrepareGameSources prepare` copies `vendor/THSSS-src/` to gitignored `THSSS/` and applies active patches. Builds do not run ilspycmd.
+- Inactive VERIFY float patches `013-float-degree.patch` / `014-float-aim.patch`: kept under `patches/`, history in [docs/float-verify-patches.md](docs/float-verify-patches.md).
 - Day-to-day: edit `THSSS/`, then `dotnet exec THSSS.Browser/obj/prepare-game-sources/PrepareGameSources.dll refresh-patches --repo .` and commit patch updates. Do not commit `THSSS/`.
 - To regenerate pristine sources from the exe: `dotnet tool restore`, then `dotnet exec … PrepareGameSources.dll decompile --repo .`, and commit `vendor/THSSS-src/`.
 - `TransformSources` then copies `THSSS` into the intermediate directory, skips `Program.cs` and `AssemblyInfo.cs`, rewrites `\\` to `/`, replaces `Encoding.Default` with `Shooting.Ansi.GBK`, replaces `.ForEach(` with `.ForEachNet48(`, and rewrites common ILSpy artifacts (`Color4.op_Implicit`, `EffectHandle.op_Implicit`, redundant casts, Font disambiguation).

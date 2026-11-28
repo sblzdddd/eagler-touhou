@@ -30,10 +30,10 @@ todos:
 ## 范围
 
 - **做**：Config 接入、触控 th06 收尾、资源打包/加载优化、THSSS-Prac（对标 PRACTICE-01..08 + 上游诚实子集）
-- **其他改动**：把 [THSSS-Config](../THSSS-Config/) 迁入 `vendor/THSSS-Config/`（与 `vendor/THSSS-src/`、`vendor/THSSS.exe` 同级，仍不参与浏览器构建）
+- **其他改动**：把 [THSSS-Config](../vendor/THSSS-Config/) 迁入 `vendor/THSSS-Config/`（与 `vendor/THSSS-src/`、`vendor/THSSS.exe` 同级，仍不参与浏览器构建）
 - **不做**：联机 / MP、清 `testOnly` / 默认可见、子树迁入 `ports/thsss`、全文 ADAPTATION（BUILD→VERIFY）
 - **源码家**：继续本仓库 sibling；eagler 只改 catalog / 协议接线 / Prac 文档
-- **适配文档总入口**：[docs/adaptation/README.md](../../eagler-touhou/docs/adaptation/README.md)；验收记录模板 [record-template.md](../../eagler-touhou/docs/adaptation/record-template.md)
+- **适配文档总入口**：[docs/adaptation/README.md](../../../docs/adaptation/README.md)；验收记录模板 [record-template.md](../../../docs/adaptation/record-template.md)
 
 ```mermaid
 flowchart TD
@@ -54,7 +54,7 @@ flowchart TD
 
 **适配文档引用**
 
-- 源码与素材出处登记：[BUILD-06](../../eagler-touhou/docs/adaptation/build.md#build-06)
+- 源码与素材出处登记：[BUILD-06](../../../docs/adaptation/build.md#build-06)
 - 仓库模块约定：[AGENTS.md](../AGENTS.md)（Game SSOT / vendor）、[README 模块表](../README.md)
 
 **本轮动作**
@@ -72,7 +72,7 @@ flowchart TD
 - 更新 [README.md](../README.md) / [README.en.md](../README.en.md) 路线图：联机标为以后；其余四项进入本轮
 - 将 [touch-th01-parity.plan.md](touch-th01-parity.plan.md) 标为历史（frontmatter 不再当待办）
 - 触控基准继续以 [touch-th06.plan.md](touch-th06.plan.md) 为准
-- 流程对照：[适配流程 §3 逐项适配](../../eagler-touhou/docs/adaptation/README.md)（本轮只开本 plan 涉及的检查编号，不要求全文建表）
+- 流程对照：[适配流程 §3 逐项适配](../../../docs/adaptation/README.md)（本轮只开本 plan 涉及的检查编号，不要求全文建表）
 
 ## 1. Config 接入（不移植 WinForms）
 
@@ -80,11 +80,11 @@ flowchart TD
 
 **适配文档引用**
 
-- 启动链：[RUNTIME-02](../../eagler-touhou/docs/adaptation/runtime.md#runtime-02)（`ready → configure → launch → first-frame`）、[RUNTIME-03](../../eagler-touhou/docs/adaptation/runtime.md#runtime-03)（配置命令响应）
-- 配置文件与持久化：[SAVE-01](../../eagler-touhou/docs/adaptation/storage.md#save-01)（`Setting.INI` 已在 catalog 声明）、[SAVE-02](../../eagler-touhou/docs/adaptation/storage.md#save-02)、[SAVE-03](../../eagler-touhou/docs/adaptation/storage.md#save-03)、[SAVE-04](../../eagler-touhou/docs/adaptation/storage.md#save-04)
-- 音量与输出：[AUDIO-01](../../eagler-touhou/docs/adaptation/presentation.md#audio-01)、[AUDIO-02](../../eagler-touhou/docs/adaptation/presentation.md#audio-02)；启动器独立 BGM/SE 音量见 [presentation.md 声音验收方法](../../eagler-touhou/docs/adaptation/presentation.md)
-- 高刷限制开关：[DISPLAY-08](../../eagler-touhou/docs/adaptation/presentation.md#display-08)（`UnlockFPS` / `limitPresentationTo60`）
-- 键位改键（若写入 INI）：[INPUT-02](../../eagler-touhou/docs/adaptation/input.md#input-02)
+- 启动链：[RUNTIME-02](../../../docs/adaptation/runtime.md#runtime-02)（`ready → configure → launch → first-frame`）、[RUNTIME-03](../../../docs/adaptation/runtime.md#runtime-03)（配置命令响应）
+- 配置文件与持久化：[SAVE-01](../../../docs/adaptation/storage.md#save-01)（`Setting.INI` 已在 catalog 声明）、[SAVE-02](../../../docs/adaptation/storage.md#save-02)、[SAVE-03](../../../docs/adaptation/storage.md#save-03)、[SAVE-04](../../../docs/adaptation/storage.md#save-04)
+- 音量与输出：[AUDIO-01](../../../docs/adaptation/presentation.md#audio-01)、[AUDIO-02](../../../docs/adaptation/presentation.md#audio-02)；启动器独立 BGM/SE 音量见 [presentation.md 声音验收方法](../../../docs/adaptation/presentation.md)
+- 高刷限制开关：[DISPLAY-08](../../../docs/adaptation/presentation.md#display-08)（`UnlockFPS` / `limitPresentationTo60`）
+- 键位改键（若写入 INI）：[INPUT-02](../../../docs/adaptation/input.md#input-02)
 
 **写入面**（`shell.mjs` 在 `launchRuntime` / `_thsss_start` 之前）：
 
@@ -103,12 +103,12 @@ flowchart TD
 
 **适配文档引用**
 
-- 限速滑动与余量：[TOUCH-01](../../eagler-touhou/docs/adaptation/input.md#touch-01)（「拖动距离保留」= 墙边 / 速度上限后的 residual）
-- 无限速与落率：[TOUCH-02](../../eagler-touhou/docs/adaptation/input.md#touch-02)、[TOUCH-10](../../eagler-touhou/docs/adaptation/input.md#touch-10)
-- 摇杆模式：[TOUCH-03](../../eagler-touhou/docs/adaptation/input.md#touch-03)、[TOUCH-04](../../eagler-touhou/docs/adaptation/input.md#touch-04)
-- 禁移连续性：[TOUCH-09](../../eagler-touhou/docs/adaptation/input.md#touch-09)
-- 触控扩展 Replay：[REPLAY-03](../../eagler-touhou/docs/adaptation/storage.md#replay-03)、[REPLAY-04](../../eagler-touhou/docs/adaptation/storage.md#replay-04)（`.trpy`）
-- 本作触控行为说明：[touch-th06.plan.md](touch-th06.plan.md)；检查表全文：[input.md](../../eagler-touhou/docs/adaptation/input.md)
+- 限速滑动与余量：[TOUCH-01](../../../docs/adaptation/input.md#touch-01)（「拖动距离保留」= 墙边 / 速度上限后的 residual）
+- 无限速与落率：[TOUCH-02](../../../docs/adaptation/input.md#touch-02)、[TOUCH-10](../../../docs/adaptation/input.md#touch-10)
+- 摇杆模式：[TOUCH-03](../../../docs/adaptation/input.md#touch-03)、[TOUCH-04](../../../docs/adaptation/input.md#touch-04)
+- 禁移连续性：[TOUCH-09](../../../docs/adaptation/input.md#touch-09)
+- 触控扩展 Replay：[REPLAY-03](../../../docs/adaptation/storage.md#replay-03)、[REPLAY-04](../../../docs/adaptation/storage.md#replay-04)（`.trpy`）
+- 本作触控行为说明：[touch-th06.plan.md](touch-th06.plan.md)；检查表全文：[input.md](../../../docs/adaptation/input.md)
 
 **本轮动作**
 
@@ -123,11 +123,11 @@ flowchart TD
 
 **适配文档引用**
 
-- 资源分工与挂载：[RUNTIME-05](../../eagler-touhou/docs/adaptation/runtime.md#runtime-05)、[PACKAGE-02](../../eagler-touhou/docs/adaptation/runtime.md#package-02)、[PACKAGE-05](../../eagler-touhou/docs/adaptation/runtime.md#package-05)
-- 首帧与资源就绪：[DISPLAY-07](../../eagler-touhou/docs/adaptation/presentation.md#display-07)、[RUNTIME-02](../../eagler-touhou/docs/adaptation/runtime.md#runtime-02)
-- OGG 音乐与音效不阻塞：[AUDIO-01](../../eagler-touhou/docs/adaptation/presentation.md#audio-01)、[AUDIO-07](../../eagler-touhou/docs/adaptation/presentation.md#audio-07)
-- 用户数据与游戏包分离（重打 `thsss.dat` 后存档仍在）：[SAVE-06](../../eagler-touhou/docs/adaptation/storage.md#save-06)
-- 检查表：[runtime.md](../../eagler-touhou/docs/adaptation/runtime.md)、[presentation.md](../../eagler-touhou/docs/adaptation/presentation.md)
+- 资源分工与挂载：[RUNTIME-05](../../../docs/adaptation/runtime.md#runtime-05)、[PACKAGE-02](../../../docs/adaptation/runtime.md#package-02)、[PACKAGE-05](../../../docs/adaptation/runtime.md#package-05)
+- 首帧与资源就绪：[DISPLAY-07](../../../docs/adaptation/presentation.md#display-07)、[RUNTIME-02](../../../docs/adaptation/runtime.md#runtime-02)
+- OGG 音乐与音效不阻塞：[AUDIO-01](../../../docs/adaptation/presentation.md#audio-01)、[AUDIO-07](../../../docs/adaptation/presentation.md#audio-07)
+- 用户数据与游戏包分离（重打 `thsss.dat` 后存档仍在）：[SAVE-06](../../../docs/adaptation/storage.md#save-06)
+- 检查表：[runtime.md](../../../docs/adaptation/runtime.md)、[presentation.md](../../../docs/adaptation/presentation.md)
 
 **本轮动作**
 
@@ -137,22 +137,22 @@ flowchart TD
 
 ## 4. THSSS-Prac（原生 session，对标文档）
 
-**模型**：eagler **native session**（`thpracRuntime: { session: "native" }`），不把 THSSS 塞进 [launcher/integrations/thprac.mjs](../../eagler-touhou/launcher/integrations/thprac.mjs) Windows 参数表。
+**模型**：eagler **native session**（`thpracRuntime: { session: "native" }`），不把 THSSS 塞进 [launcher/integrations/thprac.mjs](../../../launcher/integrations/thprac.mjs) Windows 参数表。
 
 **适配文档引用（逐项）**
 
 | 本轮动作 | 适配编号 |
 | --- | --- |
-| catalog / manifest / Release 一致声明 thprac | [PRACTICE-01](../../eagler-touhou/docs/adaptation/localization.md#practice-01) |
-| `configure` 传入 `thpracEnabled` + `thpracLocale` | [PRACTICE-02](../../eagler-touhou/docs/adaptation/localization.md#practice-02) |
-| Practice / Restart / Replay / 普通 Start 由 Runtime 自管状态 | [PRACTICE-03](../../eagler-touhou/docs/adaptation/localization.md#practice-03) |
-| 章节/符卡跳转、资源初值等界面参数真实生效 | [PRACTICE-04](../../eagler-touhou/docs/adaptation/localization.md#practice-04) |
-| 练习参数写入 `.rpy`/`.trpy`（无 sidecar） | [PRACTICE-05](../../eagler-touhou/docs/adaptation/localization.md#practice-05)、[REPLAY-04](../../eagler-touhou/docs/adaptation/storage.md#replay-04) |
-| `thprac-mouse` + 触控功能键 | [PRACTICE-06](../../eagler-touhou/docs/adaptation/localization.md#practice-06) |
-| 启动器语言 → 练习 UI 语言/字体 | [PRACTICE-07](../../eagler-touhou/docs/adaptation/localization.md#practice-07) |
-| UI 只露出已实现能力（诚实子集） | [PRACTICE-08](../../eagler-touhou/docs/adaptation/localization.md#practice-08) |
+| catalog / manifest / Release 一致声明 thprac | [PRACTICE-01](../../../docs/adaptation/localization.md#practice-01) |
+| `configure` 传入 `thpracEnabled` + `thpracLocale` | [PRACTICE-02](../../../docs/adaptation/localization.md#practice-02) |
+| Practice / Restart / Replay / 普通 Start 由 Runtime 自管状态 | [PRACTICE-03](../../../docs/adaptation/localization.md#practice-03) |
+| 章节/符卡跳转、资源初值等界面参数真实生效 | [PRACTICE-04](../../../docs/adaptation/localization.md#practice-04) |
+| 练习参数写入 `.rpy`/`.trpy`（无 sidecar） | [PRACTICE-05](../../../docs/adaptation/localization.md#practice-05)、[REPLAY-04](../../../docs/adaptation/storage.md#replay-04) |
+| `thprac-mouse` + 触控功能键 | [PRACTICE-06](../../../docs/adaptation/localization.md#practice-06) |
+| 启动器语言 → 练习 UI 语言/字体 | [PRACTICE-07](../../../docs/adaptation/localization.md#practice-07) |
+| UI 只露出已实现能力（诚实子集） | [PRACTICE-08](../../../docs/adaptation/localization.md#practice-08) |
 
-检查表与接口：[localization.md](../../eagler-touhou/docs/adaptation/localization.md)、[RUNTIME_CONTRACT.md](../../eagler-touhou/launcher/integrations/RUNTIME_CONTRACT.md)、流程 [README §4 适配表](../../eagler-touhou/docs/adaptation/README.md)
+检查表与接口：[localization.md](../../../docs/adaptation/localization.md)、[RUNTIME_CONTRACT.md](../../../launcher/integrations/RUNTIME_CONTRACT.md)、流程 [README §4 适配表](../../../docs/adaptation/README.md)
 
 **诚实基线**：上游 [RUEEE/ShiningShootingStar_Prac](https://github.com/RUEEE/ShiningShootingStar_Prac)。本轮功能子集：
 
@@ -172,11 +172,11 @@ flowchart TD
 
 **eagler 对标文档（最小）**
 
-- [product-catalog.mjs](../../eagler-touhou/common/contracts/product-catalog.mjs) `thsss`：`features.thprac: true`，`thpracRuntime: { session: "native" }`；**保持** `testOnly` / `buildOptIn`
-- 新增 [ports/thsss/PRACTICE.md](../../eagler-touhou/ports/thsss/PRACTICE.md)：功能表、键位、Replay 元数据、与上游差异
-- 新增 [ports/thsss/ADAPTATION.md](../../eagler-touhou/ports/thsss/ADAPTATION.md) **仅**「语言与练习」PRACTICE-01..08 表（链到 localization.md）；其它章节本轮不开全文
-- [ports/thsss/README.md](../../eagler-touhou/ports/thsss/README.md) 链到 PRACTICE / ADAPTATION；`thpracEnabled=false` 时原版 StageSelect 仍可用
-- 验收证据按 [record-template.md](../../eagler-touhou/docs/adaptation/record-template.md) 写入 ADAPTATION「运行验收记录」
+- [product-catalog.mjs](../../../common/contracts/product-catalog.mjs) `thsss`：`features.thprac: true`，`thpracRuntime: { session: "native" }`；**保持** `testOnly` / `buildOptIn`
+- 新增 [ports/thsss/PRACTICE.md](../../../ports/thsss/PRACTICE.md)：功能表、键位、Replay 元数据、与上游差异
+- 新增 [ports/thsss/ADAPTATION.md](../../../ports/thsss/ADAPTATION.md) **仅**「语言与练习」PRACTICE-01..08 表（链到 localization.md）；其它章节本轮不开全文
+- [ports/thsss/README.md](../../../ports/thsss/README.md) 链到 PRACTICE / ADAPTATION；`thpracEnabled=false` 时原版 StageSelect 仍可用
+- 验收证据按 [record-template.md](../../../docs/adaptation/record-template.md) 写入 ADAPTATION「运行验收记录」
 
 ## 5. 验收顺序
 
@@ -184,7 +184,7 @@ flowchart TD
 1. Config：冷启动 INI 含音量 / UnlockFPS；启动器滑条实时改 BGM/SE → RUNTIME-02、SAVE-01/03/04、AUDIO、DISPLAY-08
 2. Touch：墙边 residual 单测 + README 清单手测 → TOUCH-01/02/03/04/09/10、REPLAY-04
 3. Assets：新 `thsss.dat` 无双格式 Sound；开场贴图在全量解包完成前可显示 → PACKAGE-02、RUNTIME-05、DISPLAY-07、AUDIO-07、SAVE-06
-4. Prac：PRACTICE-01..08 按 [localization.md](../../eagler-touhou/docs/adaptation/localization.md) 走一遍
+4. Prac：PRACTICE-01..08 按 [localization.md](../../../docs/adaptation/localization.md) 走一遍
 5. 回归：无 Prac 普通局、`.rpy` / `.trpy`、存档 IndexedDB → REPLAY-02/04、SAVE-04
 
 ## 主要改动文件

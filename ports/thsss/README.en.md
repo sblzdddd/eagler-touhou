@@ -13,7 +13,7 @@ A browser port of the Windows game (.NET Framework 4.8, SlimDX, WinForms). Game 
 | --- | --- | --- |
 | `vendor/THSSS-src/` | Unpatched game sources (in git). | Copied and patched at build; regenerate with `decompile` from the exe. |
 | `vendor/THSSS.exe` | Original game assembly. | Decompiled with pinned `ilspycmd` only when regenerating `THSSS-src`. |
-| `patches/` | Ordered browser port diffs (`series` + `ownership.json`). | Applied onto `THSSS-src` into gitignored `THSSS/`. |
+| `patches/` | Ordered browser port diffs (`series` + `ownership.json`). Lines in `series` starting with `#` are kept but not applied. | Applied onto `THSSS-src` into gitignored `THSSS/`. Deferred VERIFY float patches: [docs/float-verify-patches.md](docs/float-verify-patches.md). |
 | `THSSS` | Generated working tree (not in git). | Edit here, then refresh patches. Browser-only; no desktop dual-build. |
 | `vendor/THSSS-Config` | dnSpy export of the config tool. Separate solution, `net20` WinForms, reads and writes `Setting.INI`. | Not part of the browser build. The web build writes a default `Setting.INI` when none exists. |
 | `THSSS.Platform` | WinForms, GDI+, and WMI stand-ins on `net10.0`. | Decodes PNG and BMP, and rasters text through the canvas. Other APIs exist only so the game can compile and run its main loop. |

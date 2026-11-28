@@ -13,7 +13,7 @@
 | --- | --- | --- |
 | `vendor/THSSS-src/` | 未打补丁的游戏源码（入库）。 | 构建时复制并打补丁；可用 `decompile` 从 exe 重生。 |
 | `vendor/THSSS.exe` | 原版游戏程序集。 | 仅在重生 `THSSS-src` 时用锁定的 `ilspycmd` 反编译。 |
-| `patches/` | 有序的浏览器移植补丁（`series` + `ownership.json`）。 | 打到 `THSSS-src` 上，生成 gitignored 的 `THSSS/`。 |
+| `patches/` | 有序的浏览器移植补丁（`series` + `ownership.json`）。`series` 里以 `#` 开头的行不参与构建。 | 打到 `THSSS-src` 上，生成 gitignored 的 `THSSS/`。VERIFY 浮点对齐遗留见 [docs/float-verify-patches.md](docs/float-verify-patches.md)。 |
 | `THSSS` | 生成的工作树（不入库）。 | 在此改逻辑，再 refresh 补丁。仅浏览器目标，无桌面双构建。 |
 | `vendor/THSSS-Config` | dnSpy 导出的配置器，独立解决方案，目标 `net20` WinForms，读写 `Setting.INI`。 | 不参与浏览器构建。网页版若没有 `Setting.INI`，会自行写入一份默认配置。 |
 | `THSSS.Platform` | `net10.0` 上的 WinForms、GDI+、WMI 替身。 | 能解码 PNG / BMP，并用画布光栅化文字。其余 API 只保留游戏能编译、能跑主循环所需的部分。 |
